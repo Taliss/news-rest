@@ -1,0 +1,29 @@
+{
+  "name": "news-rest",
+  "version": "1.0.0",
+  "description": "simple rest api for dummy news",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Taliss/news-rest.git"
+  },
+  "keywords": [
+    "api",
+    "rest",
+    "koa",
+    "simple",
+    "rest-api",
+    "restful",
+    "docker",
+    "docker-compose"
+  ],
+  "author": "Iliyan Vlahov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Taliss/news-rest/issues"
+  },
+  "homepage": "https://github.com/Taliss/news-rest#readme"
+}
