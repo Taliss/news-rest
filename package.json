@@ -25,5 +25,13 @@
   "bugs": {
     "url": "https://github.com/Taliss/news-rest/issues"
   },
-  "homepage": "https://github.com/Taliss/news-rest#readme"
+  "homepage": "https://github.com/Taliss/news-rest#readme",
+  "devDependencies": {
+    "eslint": "^8.3.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.0"
+  }
 }
