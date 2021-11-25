@@ -4,7 +4,8 @@
   "description": "simple rest api for dummy news",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -33,5 +34,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "nodemon": "^2.0.15",
     "prettier": "^2.5.0"
+  },
+  "dependencies": {
+    "koa": "^2.13.4"
   }
 }
