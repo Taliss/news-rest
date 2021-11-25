@@ -6,6 +6,12 @@ services:
     command: npm run dev
     container_name: news-api
     restart: unless-stopped
+    healthcheck:
+      test: wget --quiet --tries=5 --spider http://localhost:3000 || exit 1
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
     ports:
       - '3000:3000'
     depends_on:
@@ -22,7 +28,7 @@ services:
       interval: 10s
       timeout: 10s
       retries: 5
-      start_period: 10s
+      start_period: 30s
     ports:
       - '27017:27017'
     environment:
