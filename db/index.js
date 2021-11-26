@@ -13,5 +13,5 @@ const establishDBConnection = async () => {
 
 module.exports = {
   establishDBConnection,
-  collection: (collection) => db.collection(collection),
+  getCollection: (col) => db.collection(col),
 };

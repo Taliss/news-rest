@@ -15,6 +15,7 @@ app.listen(port, async () => {
   }
 });
 
+// no sigterm under windows !
 process.on('SIGTERM', () => {
   // some clean up can be done here, before we exit the process
   console.log('Shutting down');

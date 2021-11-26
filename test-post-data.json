@@ -1,0 +1,30 @@
+[
+  {
+    "date": "now",
+    "name": "bulba",
+    "shortDescription": "bulbazor is the coolest pokemon",
+    "title": "pokemon",
+    "text": "bulbazor will eat you for breakfast. bulbazor is one with nature. He is also strong, polite, and calm - the ultimate pokemon!"
+  },
+  {
+    "date": "now",
+    "name": "pika",
+    "shortDescription": "Pikachu is nince",
+    "title": "pokemon",
+    "text": "Pikachu can shoot lightning, so be careful and don't mess with him!"
+  },
+  {
+    "date": "now",
+    "name": "squirrel",
+    "shortDescription": "Squirrel is gangsta",
+    "title": "pokemon",
+    "text": "Squirrel likes water. He is a tricky one, once he was a gangsta - now he is more than that!"
+  },
+  {
+    "date": "now",
+    "name": "Mheow",
+    "shortDescription": "Mheow is talking cat",
+    "title": "pokemon",
+    "text": "Mheow can talk - this is a knife with two edges, better find another pokemon and leave this one to team Rocket!"
+  }
+]
