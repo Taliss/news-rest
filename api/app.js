@@ -6,8 +6,8 @@ const errorHandler = require('./middlewares/error-handler');
 const app = new Koa();
 
 app
+  .use(errorHandler)
   .use(bodyParser())
-  // .use(errorHandler)
   .use(apiRouter.middleware())
   .use(apiRouter.router.allowedMethods());
 

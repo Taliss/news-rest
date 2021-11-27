@@ -12,25 +12,30 @@ const create = async (ctx, _next) => {
 
 const update = async (ctx, _next) => {
   const result = await news.update(ctx.params.id, ctx.request.body);
-  ctx.status = result.matchedCount ? 200 : 404;
+
+  ctx.assert(result.matchedCount, 404);
+  ctx.body = {};
 };
 
 const list = async (ctx, _next) => {
   // TODO: add filtering and ordering
   const result = await news.list();
-
-  ctx.body = { news: result };
+  ctx.body = result;
 };
 
 const fetch = async (ctx, _next) => {
   const findResult = await news.fetch(ctx.params.id);
-  ctx.status = findResult ? 200 : 404;
-  if (findResult) ctx.body = findResult;
+
+  ctx.assert(findResult, 404);
+  ctx.body = findResult;
 };
 
+// delete will not be idempotent with this behavior
 const del = async (ctx, _next) => {
   const deleteResult = await news.del(ctx.params.id);
-  ctx.status = deleteResult.deletedCount ? 204 : 404;
+
+  ctx.assert(deleteResult.deletedCount, 404);
+  ctx.body = {};
 };
 
 module.exports = {
