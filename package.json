@@ -4,7 +4,7 @@
   "description": "simple rest api for dummy news",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "jest",
     "dev": "nodemon index.js",
     "start": "node index.js",
     "lint": "eslint .",
@@ -36,8 +36,10 @@
     "eslint-plugin-jest": "^25.3.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.3.1",
     "nodemon": "^2.0.15",
-    "prettier": "^2.5.0"
+    "prettier": "^2.5.0",
+    "supertest": "^6.1.6"
   },
   "dependencies": {
     "config": "^3.3.6",
