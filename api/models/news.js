@@ -1,4 +1,4 @@
-const { ObjectId } = require('bson');
+const { ObjectId } = require('mongodb');
 const { getCollection } = require('../../db');
 
 // constant for news collection, some sort of dependancy injection can be done here as an improvement

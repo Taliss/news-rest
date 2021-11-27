@@ -19,5 +19,6 @@ app.listen(port, async () => {
 process.on('SIGTERM', () => {
   // some clean up can be done here, before we exit the process
   console.log('Shutting down');
+  // eslint-disable-next-line no-process-exit
   process.exit(1);
 });

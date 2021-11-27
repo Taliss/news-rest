@@ -1,6 +1,6 @@
 const news = require('../models/news');
 
-const create = async (ctx, _next) => {
+const create = async (ctx) => {
   const { news: requestNews } = ctx.request.body;
   const insertedIds = await news.create(requestNews);
 
@@ -10,20 +10,20 @@ const create = async (ctx, _next) => {
   };
 };
 
-const update = async (ctx, _next) => {
+const update = async (ctx) => {
   const result = await news.update(ctx.params.id, ctx.request.body);
 
   ctx.assert(result.matchedCount, 404);
   ctx.body = {};
 };
 
-const list = async (ctx, _next) => {
+const list = async (ctx) => {
   // TODO: add filtering and ordering
   const result = await news.list();
   ctx.body = result;
 };
 
-const fetch = async (ctx, _next) => {
+const fetch = async (ctx) => {
   const findResult = await news.fetch(ctx.params.id);
 
   ctx.assert(findResult, 404);
@@ -31,7 +31,7 @@ const fetch = async (ctx, _next) => {
 };
 
 // delete will not be idempotent with this behavior
-const del = async (ctx, _next) => {
+const del = async (ctx) => {
   const deleteResult = await news.del(ctx.params.id);
 
   ctx.assert(deleteResult.deletedCount, 404);
