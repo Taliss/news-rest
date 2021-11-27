@@ -1,11 +1,12 @@
-const Router = require('koa-router');
+const router = require('koa-joi-router');
+const newsRouter = require('./news');
 const version = require('../../package.json').version;
 
-const newsRouter = require('./news');
+const apiRouter = router();
+apiRouter.prefix('/api');
 
-const router = new Router({ prefix: '/api' });
+apiRouter
+  .get('/version', (ctx) => (ctx.body = { version }))
+  .use(newsRouter.middleware());
 
-router.get('/version', (ctx) => (ctx.body = { version }));
-router.use(newsRouter.routes());
-
-module.exports = router;
+module.exports = apiRouter;

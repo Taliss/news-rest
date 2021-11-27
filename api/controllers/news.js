@@ -6,8 +6,11 @@ const NEWS = 'news';
 
 const create = async (ctx, _next) => {
   const { news } = ctx.request.body;
-  await getCollection(NEWS).insertMany(news);
+  const { insertedIds } = await getCollection(NEWS).insertMany(news);
   ctx.status = 201;
+  ctx.body = {
+    insertedIds: Object.values(insertedIds).map((objId) => objId.toString()),
+  };
 };
 
 const update = async (ctx, _next) => {
@@ -15,19 +18,23 @@ const update = async (ctx, _next) => {
     { _id: ObjectId(ctx.params.id) },
     { $set: ctx.request.body }
   );
-  ctx.status = result ? 200 : 404;
+
+  ctx.stauts = result.matchedCount ? 200 : 204;
 };
 
 const list = async (ctx, _next) => {
   const news = await getCollection(NEWS).find().toArray();
-  ctx.body = news;
+  ctx.body = {
+    news,
+  };
 };
 
 const fetch = async (ctx, _next) => {
   const findResult = await getCollection(NEWS).findOne({
     _id: ObjectId(ctx.params.id),
   });
-  ctx.body = findResult;
+  ctx.status = findResult ? 200 : 404;
+  if (findResult) ctx.body = findResult;
 };
 
 const del = async (ctx, _next) => {
