@@ -1,11 +1,14 @@
 const router = require('koa-joi-router');
+const joiObjectId = require('joi-objectid');
 const news = require('../controllers/news');
 
 const newsRouter = router();
 const joi = router.Joi;
+joi.objectId = joiObjectId(joi);
+
 newsRouter.prefix('/news');
 
-const userSchema = {
+const newsSchema = {
   title: joi.string().required().min(2).max(200),
   description: joi.string().required().min(2).max(350),
   text: joi.string().required().min(10),
@@ -20,7 +23,7 @@ newsRouter
         body: joi.object({
           news: joi
             .array()
-            .items(joi.object({ ...userSchema }))
+            .items(joi.object({ ...newsSchema }))
             .min(1)
             .max(1000)
             .required(),
@@ -32,15 +35,15 @@ newsRouter
   )
   .get(
     '/:id',
-    { validate: { params: { id: joi.string().min(24).max(24).required() } } },
+    { validate: { params: { id: joi.objectId().required() } } },
     news.fetch
   )
   .put(
     '/:id',
     {
       validate: {
-        body: joi.object({ ...userSchema }),
-        params: { id: joi.string().min(24).max(24).required() },
+        body: joi.object({ ...newsSchema }),
+        params: { id: joi.objectId().required() },
         type: 'json',
       },
     },
@@ -51,10 +54,10 @@ newsRouter
     {
       validate: {
         body: joi
-          .object({ ...userSchema })
-          .fork(Object.keys(userSchema), (schema) => schema.optional())
+          .object({ ...newsSchema })
+          .fork(Object.keys(newsSchema), (schema) => schema.optional())
           .min(1),
-        params: { id: joi.string().min(24).max(24).required() },
+        params: { id: joi.objectId().required() },
         type: 'json',
       },
     },
@@ -64,8 +67,7 @@ newsRouter
     '/:id',
     {
       validate: {
-        params: { id: joi.string().min(24).max(24).required() },
-        type: 'json',
+        params: { id: joi.objectId().required() },
       },
     },
     news.del

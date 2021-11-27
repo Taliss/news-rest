@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "config": "^3.3.6",
+    "joi-objectid": "^4.0.2",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
     "koa-joi-router": "^8.0.0",

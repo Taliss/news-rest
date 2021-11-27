@@ -7,7 +7,7 @@ const app = new Koa();
 
 app
   .use(bodyParser())
-  .use(errorHandler)
+  // .use(errorHandler)
   .use(apiRouter.middleware())
   .use(apiRouter.router.allowedMethods());
 
