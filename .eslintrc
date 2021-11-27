@@ -1,8 +1,17 @@
 {
   "extends": ["eslint:recommended", "plugin:node/recommended", "prettier"],
   "env": {
+    "jest/globals": true,
     "node": true
   },
+  "overrides": [
+    {
+      "files": "**/*.test.js",
+      "rules": {
+        "node/no-unpublished-require": 0
+      }
+    }
+  ],
   "plugins": ["prettier", "node", "jest"],
   "rules": {
     "no-unused-vars": 2,
