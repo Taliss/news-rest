@@ -31,7 +31,7 @@ afterAll(async () => {
   await closeConnection();
 });
 
-describe('Fetching single news', () => {
+describe('Fetching single news record', () => {
   test('should not pass when invalid id is passed', async () => {
     await request(app.callback())
       .get(`/api/news/somethingAsAnId`)
