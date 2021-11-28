@@ -5,7 +5,11 @@ const { getCollection } = require('../../db');
 const NEWS = 'news';
 
 const create = async (news) => {
-  const { insertedIds } = await getCollection(NEWS).insertMany(news);
+  const newsWithDate = news.map((x) => ({
+    ...x,
+    date: new Date().toISOString(),
+  }));
+  const { insertedIds } = await getCollection(NEWS).insertMany(newsWithDate);
   return Object.values(insertedIds).map((objId) => objId.toString());
 };
 
