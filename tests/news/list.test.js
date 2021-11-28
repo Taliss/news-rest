@@ -85,4 +85,22 @@ describe('Fetching list of news records with filters', () => {
         expect(res.body.message).toMatch(/must be less than or equal to 50/);
       });
   });
+
+  test('should return all dummy data when using word that exist in every title', async () => {
+    await request(app.callback())
+      .get('/api/news/?title=pokemon')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body).toHaveLength(testData.length);
+      });
+  });
+
+  test('should return only one specific doc', async () => {
+    await request(app.callback())
+      .get('/api/news/?title=bulba')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body).toHaveLength(1);
+      });
+  });
 });
