@@ -15,7 +15,25 @@ const newsSchema = {
 };
 
 newsRouter
-  .get('/', news.list)
+  .get(
+    '/',
+    {
+      validate: {
+        query: joi.object({
+          from: joi.date().iso(),
+          to: joi
+            .date()
+            .iso()
+            .when('from', {
+              is: joi.exist(),
+              then: joi.date().greater(joi.ref('from')),
+            }),
+          title: joi.string().max(50),
+        }),
+      },
+    },
+    news.list
+  )
   .post(
     '/',
     {
