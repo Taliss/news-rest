@@ -1,4 +1,5 @@
 const news = require('../models/news');
+const _pick = require('ramda').pick;
 
 const create = async (ctx) => {
   const { news: requestNews } = ctx.request.body;
@@ -17,9 +18,10 @@ const update = async (ctx) => {
   ctx.body = {};
 };
 
+// utility functions just for list
 const list = async (ctx) => {
-  // TODO: add filtering and ordering
-  const result = await news.list();
+  // TODO: add ordering
+  const result = await news.list(_pick(['from', 'to', 'title'], ctx.query));
   ctx.body = result;
 };
 

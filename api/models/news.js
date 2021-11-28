@@ -1,4 +1,5 @@
 const { ObjectId } = require('mongodb');
+const _isEmpty = require('ramda').isEmpty;
 const { getCollection } = require('../../db');
 
 // constant for news collection, some sort of dependancy injection can be done here as an improvement
@@ -21,9 +22,17 @@ const update = async (id, doc) => {
   return result;
 };
 
-// TODO: add filtering and ordering
-const list = async () => {
-  const news = await getCollection(NEWS).find().toArray();
+// TODO: add ordering
+const list = async (filters, order) => {
+  let query = {};
+  if (!_isEmpty(filters)) {
+    if (filters.from) query.date = { $gte: filters.from.toISOString() };
+    if (filters.to)
+      query.date = { ...query.date, $lte: filters.to.toISOString() };
+    if (filters.title) query.title = { $regex: new RegExp(filters.title, 'i') };
+  }
+
+  const news = await getCollection(NEWS).find(query).toArray();
   return news;
 };
 
