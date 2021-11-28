@@ -12,11 +12,17 @@ const validNews = {
   description: 'test description',
   text: 'test text !',
 };
-// there is nothing we can do if error occurs in beforeAll or afterAll, so... let it pop
+
 beforeAll(async () => {
-  await establishDBConnection();
+  try {
+    await establishDBConnection();
+  } catch (err) {
+    console.error('Unable to run tests duo to error while doing test setup');
+    throw err;
+  }
 });
 
+// If the drop operation fails, this can leave to potential data polution in our test db
 afterAll(async () => {
   await getCollection('news').drop();
   await closeConnection();
