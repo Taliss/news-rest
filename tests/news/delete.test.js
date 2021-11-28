@@ -18,7 +18,8 @@ beforeAll(async () => {
   try {
     await establishDBConnection();
     // create one item and get the id
-    const insertedIds = await news.create([validNews]);
+    // create is mutating the input to insert Ids, so be carefull!
+    const insertedIds = await news.create([{ ...validNews }]);
     validId = insertedIds[0];
   } catch (err) {
     console.error('Unable to run tests duo to error while doing test setup');

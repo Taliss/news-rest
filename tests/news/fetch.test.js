@@ -18,7 +18,8 @@ beforeAll(async () => {
   try {
     await establishDBConnection();
     // create one item and get the id
-    const insertedIds = await news.create([validNews]);
+    // create is mutating the input to insert Ids, so be carefull!
+    const insertedIds = await news.create([{ ...validNews }]);
     validId = insertedIds[0];
   } catch (err) {
     console.error('Unable to run tests duo to error while doing test setup');
@@ -58,13 +59,7 @@ describe('Fetching single news record', () => {
       .get(`/api/news/${validId}`)
       .expect(200)
       .expect((res) => {
-        expect(res.body).toEqual(
-          expect.objectContaining({
-            title: validNews.title,
-            description: validNews.description,
-            text: validNews.text,
-          })
-        );
+        expect(res.body).toEqual(expect.objectContaining({ ...validNews }));
         expect(res.body._id).toEqual(validId);
         expect(res.body.date).toEqual(expect.any(String));
       });
