@@ -22,7 +22,6 @@ const update = async (id, doc) => {
   return result;
 };
 
-// TODO: add ordering
 const list = async (filters, order) => {
   let query = {};
   if (!_isEmpty(filters)) {
@@ -32,7 +31,13 @@ const list = async (filters, order) => {
     if (filters.title) query.title = { $regex: new RegExp(filters.title, 'i') };
   }
 
-  const news = await getCollection(NEWS).find(query).toArray();
+  let sort = {};
+  if (!_isEmpty(order)) {
+    if (order.byDate) sort.date = order.byDate === 'asc' ? 1 : -1;
+    if (order.byTitle) sort.title = order.byTitle === 'asc' ? 1 : -1;
+  }
+
+  const news = await getCollection(NEWS).find(query).sort(sort).toArray();
   return news;
 };
 

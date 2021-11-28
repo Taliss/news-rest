@@ -18,10 +18,11 @@ const update = async (ctx) => {
   ctx.body = {};
 };
 
-// utility functions just for list
 const list = async (ctx) => {
-  // TODO: add ordering
-  const result = await news.list(_pick(['from', 'to', 'title'], ctx.query));
+  const result = await news.list(
+    _pick(['from', 'to', 'title'], ctx.query),
+    _pick(['byDate', 'byTitle'], ctx.query)
+  );
   ctx.body = result;
 };
 

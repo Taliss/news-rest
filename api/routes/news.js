@@ -14,6 +14,8 @@ const newsSchema = {
   text: joi.string().required().min(10),
 };
 
+const orderScheme = joi.string().lowercase().valid('asc', 'desc');
+
 newsRouter
   .get(
     '/',
@@ -29,6 +31,8 @@ newsRouter
               then: joi.date().greater(joi.ref('from')),
             }),
           title: joi.string().max(50),
+          byDate: orderScheme,
+          byTitle: orderScheme,
         }),
       },
     },

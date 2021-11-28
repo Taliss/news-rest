@@ -104,3 +104,33 @@ describe('Fetching list of news records with filters', () => {
       });
   });
 });
+
+describe('Fetching list of news with ordering', () => {
+  test('should reject request when invalid order value is given', async () => {
+    await request(app.callback())
+      .get('/api/news?byTitle=strange')
+      .expect(400)
+      .expect((res) => {
+        expect(res.body.message).toMatch(/asc, desc/);
+      });
+  });
+
+  test('should return sorted records by title in ASC order', async () => {
+    await request(app.callback())
+      .get('/api/news?byTitle=asc')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body[0].title).toEqual(testData[0].title);
+      });
+  });
+
+  test('should return sorted records by title in DESC order', async () => {
+    await request(app.callback())
+      // not case sensitive
+      .get('/api/news?byTitle=DESC')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body[0].title).toEqual(testData[2].title);
+      });
+  });
+});
