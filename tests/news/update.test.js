@@ -100,11 +100,13 @@ describe('Updating news document with PUT', () => {
       .get(`/api/news/${validId}`)
       .expect(200)
       .expect((res) => {
-        expect(res.body).toEqual({
-          ...validNews,
-          title: newTitle,
-          _id: validId,
-        });
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            ...validNews,
+            title: newTitle,
+            _id: validId,
+          })
+        );
       });
   });
 });
@@ -150,12 +152,14 @@ describe('Updating news document with PATCH', () => {
       .get(`/api/news/${validId}`)
       .expect(200)
       .expect((res) => {
-        expect(res.body).toEqual({
-          ...validNews,
-          title: newTitle,
-          description: newDescription,
-          _id: validId,
-        });
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            ...validNews,
+            title: newTitle,
+            description: newDescription,
+            _id: validId,
+          })
+        );
       });
   });
 });
