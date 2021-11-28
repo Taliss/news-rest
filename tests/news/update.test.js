@@ -107,31 +107,55 @@ describe('Updating news document with PUT', () => {
         });
       });
   });
+});
 
-  //   test('should return not found when id is valid, but no record', async () => {
-  //     const validMissingId = validId.substring(0, validId.length - 4) + '0000';
-  //     await request(app.callback())
-  //       .get(`/api/news/${validMissingId}`)
-  //       .expect(404)
-  //       .expect((res) => {
-  //         expect(res.body.message).toEqual('Not Found');
-  //       });
-  //   });
+describe('Updating news document with PATCH', () => {
+  test('should not pass when invalid id is passed', async () => {
+    await request(app.callback())
+      .patch(`/api/news/somethingAsAnId`)
+      .send({
+        title: 'i am not a valid news record',
+      })
+      .expect(400)
+      .expect((res) => {
+        expect(res.body.message).toMatch(
+          /fails to match the valid mongo id pattern/
+        );
+      });
+  });
 
-  //   test('should return valid news record', async () => {
-  //     await request(app.callback())
-  //       .get(`/api/news/${validId}`)
-  //       .expect(200)
-  //       .expect((res) => {
-  //         expect(res.body).toEqual(
-  //           expect.objectContaining({
-  //             title: validNews.title,
-  //             description: validNews.description,
-  //             text: validNews.text,
-  //           })
-  //         );
-  //         expect(res.body._id).toEqual(validId);
-  //         expect(res.body.date).toEqual(expect.any(String));
-  //       });
-  //   });
+  test('should not pass when extra prop is send', async () => {
+    await request(app.callback())
+      .patch(`/api/news/${validId}`)
+      .send({
+        foo: 'foo',
+        title: 'please do not update me',
+      })
+      .expect(400)
+      .expect((res) => {
+        expect(res.body.message).toMatch(/is not allowed/);
+      });
+  });
+
+  test('should update the record with partial data send', async () => {
+    const newTitle = 'updated title';
+    const newDescription = 'updated description';
+
+    await request(app.callback())
+      .patch(`/api/news/${validId}`)
+      .send({ description: newDescription, title: newTitle })
+      .expect(200);
+
+    await request(app.callback())
+      .get(`/api/news/${validId}`)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body).toEqual({
+          ...validNews,
+          title: newTitle,
+          description: newDescription,
+          _id: validId,
+        });
+      });
+  });
 });
