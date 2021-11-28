@@ -18,6 +18,7 @@ services:
       DB_URL: mongodb://root:qwerty@mongo:27017/
     volumes:
       - .:/usr/src/app
+      - /usr/src/app/node_modules
     depends_on:
       mongo:
         condition: service_healthy
