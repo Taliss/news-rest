@@ -38,3 +38,51 @@ describe('Fetching list of news records', () => {
       });
   });
 });
+
+//allowed filters from, to, title -> all optional
+describe('Fetching list of news records with filters', () => {
+  test('should reject request when invalid filter is given', async () => {
+    await request(app.callback())
+      .get('/api/news?noSuchFilter=123')
+      .expect(400)
+      .expect((res) => {
+        expect(res.body.message).toMatch(/is not allowed/);
+      });
+  });
+
+  test('should reject request from or to are invalid ISO dates', async () => {
+    await request(app.callback())
+      .get('/api/news?from=2021-abc')
+      .expect(400)
+      .expect((res) => {
+        expect(res.body.message).toMatch(/must be in ISO/);
+      });
+
+    await request(app.callback())
+      .get('/api/news?to=2021-abc')
+      .expect(400)
+      .expect((res) => {
+        expect(res.body.message).toMatch(/must be in ISO/);
+      });
+  });
+
+  test('should reject request when from is greater than to', async () => {
+    await request(app.callback())
+      .get('/api/news?from=2021-11-28&to=2021-10-28')
+      .expect(400)
+      .expect((res) => {
+        expect(res.body.message).toMatch(/must be greater/);
+      });
+  });
+
+  test('should reject request when title filter greater than 50', async () => {
+    await request(app.callback())
+      .get(
+        '/api/news?title=somethingLongerThanFiftySymbolsSendAndThisCanCauseTroublesButWeCatchItHopeNowThisIsLongEnought'
+      )
+      .expect(400)
+      .expect((res) => {
+        expect(res.body.message).toMatch(/must be less than or equal to 50/);
+      });
+  });
+});
